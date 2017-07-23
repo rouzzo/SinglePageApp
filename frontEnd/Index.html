@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<!-- ng-app attribute automatically initializes the application -->
+<html ng-app="myApp">
+<head>
+	<title>CURD Tutorial</title>
+	<!-- BootStrap Scripts -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+	<script  src="vendor/jquery-2.2.4.min.js" ></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" crossorigin="anonymous"></script>
+	<script src="vendor/angular.min.js"></script> 
+</head>
+<!-- controller	is a JS constructor function, a new child scope will be created and made available as an injectable parameter to the Controller's constructor function as $scope -->
+<body ng-controller="myCtrl" ng-init="getData()">
+	<nav class="navbar navbar-default">
+		<!-- Header -->
+		<div class="navbar-header">
+			<a class="navbar-brand">Person Information Details </a>
+		</div>		
+	</nav>
+	<!-- main body -->
+	<div class="container-fluid" >
+		<table class="table table-striped">
+			<caption>
+				<div class="col-sm-6">
+				    <input type="text" class="form-control" placeholder="Search for..." ng-model="searchString">
+				</div>
+				<div class="col-sm-6">
+					<button type="button" class="btn btn-primary pull-right" data-toggle="modal" data-target="#addMovie">Register</button>
+				</div>
+			</caption>
+			<thead>
+				<tr>
+					<th>#</th>
+					<th>User ID</th>
+					<th>Name</th>
+					<th>Phone</th>
+					<th>Email</th>
+					<th>Country</th>
+					<th>Actions</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="info in personList | filter: searchString track by $index">
+					<th scope="row" ng-bind="($index + 1)"></th>
+					<td ng-bind="info.userId"></td>
+					<td ng-bind="info.name"></td>
+					<td ng-bind="info.phone"></td>
+					<td ng-bind="info.email"></td>
+					<td ng-bind="info.country"></td>
+					<td>
+						<button type="button" class="btn btn-danger btn-sm" ng-click="setIndex(info._id)" data-toggle="modal" data-target="#deleteConfirmation">Delete</button>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		<div id="addMovie" class="modal fade" tabindex="-1" role="dialog"  data-backdrop="static" data-keyboard="false">
+		  	<div class="modal-dialog" role="document">
+		    	<div class="modal-content">
+		      		<div class="modal-header">
+		        		<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		        		<h4 class="modal-title">User Registration</h4>
+		      		</div>
+		      		<div class="modal-body">
+		      			<form ng-submit="addDetails()">
+					  		<div class="form-group">
+					    		<label for="title">User ID</label>
+					    		<input type="text" class="form-control" id="title" placeholder="Username" ng-model="details.userId">
+					  		</div>
+					  		<div class="form-group">
+					    		<label for="year">Password</label>
+					    		<input type="Password" class="form-control" id="year" placeholder="at least 6 characters" ng-model="details.password">
+					    	</div>
+					    	<div class="form-group">
+							    <label for="year">Confirm Password</label>
+							    <input type="Password" class="form-control" id="year" placeholder="" ng-model="details.cnPassword">
+						    </div>
+						  	<div class="form-group">
+							    <label for="genre">Name</label>
+							    <input type="text" class="form-control" id="genre" placeholder="Name" ng-model="details.name">
+						  	</div>
+						  	<div class="form-group">
+							    <label for="actor">Phone*</label>
+							    <input type="phone" class="form-control" id="actor" placeholder="Phone" ng-model="details.phone" required/>
+						  	</div>
+						  	<div class="form-group">
+							    <label for="rating">Email</label>
+							    <input type="email" class="form-control" id="rating" placeholder="Email" ng-model="details.email">
+						  	</div>
+					  		<div class="form-group">
+					    		<label for="rating">Country</label>
+					    		<select class="form-control" name="countryCode" id="" ng-model="details.country">
+									<option data-countryCode="GB" value="44" Selected>----Select----</option>
+									<option data-countryCode="US" value="USA">USA (+1)</option>
+									<optgroup label="Other countries">
+										<option data-countryCode="DZ" value="Algeria">Algeria (+213)</option>
+										<option data-countryCode="AD" value="Andorra">Andorra (+376)</option>
+										<option data-countryCode="AO" value="Angola">Angola (+244)</option>
+										<option data-countryCode="AI" value="Anguilla">Anguilla (+1264)</option>
+									</optgroup>
+								</select>
+					  		</div>
+		      				<div class="modal-footer">
+		       					<button type="button" class="btn btn-default" data-dismiss="modal" ng-click="deleteDetails()">Cancel</button>
+		        				<button type="submit" class="btn btn-primary pull-right">Submit</button>
+		      				</div>
+		      			</form>
+		      		</div>
+		    	</div>
+		  	</div>
+		</div>	
+	<script src="script/app.js"></script>
+	<!-- <script src="Directives/constant.js"></script> -->
+</body>
+</html>
